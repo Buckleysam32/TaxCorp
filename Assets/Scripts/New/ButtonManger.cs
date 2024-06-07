@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class ButtonManger : MonoBehaviour
 {
-    public GameObject sideBar;
+    [SerializeField]
+    private GameObject sideBar;
 
     private void Start()
     {
         sideBar.SetActive(false);
     }
-    public void OpenMenu()
+
+    public void CloseMenu(GameObject close)
     {
-        Debug.Log("Open Menu");
-        sideBar.SetActive(true);
+        close.SetActive(false);
     }
 
-    public void CloseMenu()
+    public void OpenMenu(GameObject open)
     {
-        Debug.Log("Close Menu");
-        sideBar.SetActive(false);
+        open.SetActive(true);
     }
 }
