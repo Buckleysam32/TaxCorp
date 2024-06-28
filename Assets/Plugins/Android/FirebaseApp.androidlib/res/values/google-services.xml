@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">611646296309</string>
+  <string name="google_storage_bucket" translatable="false">taxcorp-c327b.appspot.com</string>
+  <string name="project_id" translatable="false">taxcorp-c327b</string>
+  <string name="google_api_key" translatable="false">AIzaSyBH8rBUw_p5q4Wjg4ARe43vY282-KefhD0</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBH8rBUw_p5q4Wjg4ARe43vY282-KefhD0</string>
+  <string name="google_app_id" translatable="false">1:611646296309:android:5648be6dbb128de26c35bc</string>
+</resources>

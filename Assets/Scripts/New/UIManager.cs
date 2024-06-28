@@ -10,11 +10,13 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI potholeCost;
     public TextMeshProUGUI tollCost;
+    public TextMeshProUGUI propertyCost;
 
     private void Start()
     {
         inv = FindObjectOfType<Inv>();
         UpdateText();
+        Application.targetFrameRate = 60;
     }
 
     public void UpdateText()

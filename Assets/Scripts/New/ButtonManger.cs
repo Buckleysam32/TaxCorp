@@ -9,7 +9,7 @@ public class ButtonManger : MonoBehaviour
 
     private void Start()
     {
-        sideBar.SetActive(false);
+        Application.targetFrameRate = 60;
     }
 
     public void CloseMenu(GameObject close)
