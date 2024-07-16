@@ -10,20 +10,25 @@ public class Tap : MonoBehaviour
     public GameObject money2;
     public GameObject money3;
     private AudioManager audioManager;
+    private ButtonManger buttonManger;
 
     private void Start()
     {
         myAnim = GetComponent<Animator>();
         inv = FindObjectOfType<Inv>();
         audioManager = FindObjectOfType<AudioManager>();
+        buttonManger = FindObjectOfType<ButtonManger>();
     }
 
     private void OnMouseDown()
     {
-        myAnim.SetTrigger("Tap");
-        inv.AddMoney();
-        MoneyAnim();
-        audioManager.TapAudio();
+        if (buttonManger.canTap)
+        {
+            myAnim.SetTrigger("Tap");
+            inv.AddMoney();
+            MoneyAnim();
+            audioManager.TapAudio();
+        }
     }
 
     private void MoneyAnim()
