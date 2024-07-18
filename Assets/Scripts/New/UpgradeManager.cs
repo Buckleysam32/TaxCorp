@@ -5,18 +5,50 @@ using UnityEngine;
 public class UpgradeManager : MonoBehaviour
 {
     private Inv invScript;
-    private int potholeCost;
-    private int tollCost;
-    private int propertyCost;
     private UIManager uiScript;
+
+    private int potholeCost;
+    public int potholeLvl;
+
+    private int tollCost;
+    public int tollLvl;
+    private int[] tollCosts = { 0, 3, 39, 50, 65, 85, 111, 144, 188, 244, 318 };
+
+    private int propertyCost;
+    public int propertyLvl;
+    public bool canProperty;
+    private int[] propertyCosts = { 0, 100, 130, 169, 219, 285, 371, 482, 627, 815, 1060 };
+
+    private int grogCost;
+    public int grogLvl;
+    public bool canGrog;
+    private int[] grogCosts = { 0, 1000, 1300, 1690, 2856, 3712, 4826, 6274, 8156, 10603, 13784 };
+
+    private int corpCost;
+    public int corpLvl;
+    public bool canCorp;
+    private int[] corpCosts = { 0, 10000, 13000};
+
+    private int warCost;
+    public int warLvl;
+    public bool canWar;
+    private int[] warCosts = { 0, 50000, 65000};
 
     private void Start()
     {
         invScript = FindObjectOfType<Inv>();
         uiScript = FindObjectOfType<UIManager>();
+        potholeLvl = 1;
         potholeCost = 50;
-        tollCost = 150;
-        propertyCost = 1000;
+        tollLvl = 1;
+        propertyLvl = 1;
+        grogLvl = 1;
+        corpLvl = 1;
+        warLvl = 1;
+        canProperty = false;
+        canGrog = false;
+        canCorp = false;
+        canWar = false;
     }
 
     public void BuyUpgrade(string upgrade)
@@ -26,23 +58,98 @@ public class UpgradeManager : MonoBehaviour
             invScript.tapAmount += 1;
             invScript.currentMoney -= potholeCost;
             potholeCost = Mathf.RoundToInt(potholeCost * 1.5f);
-            uiScript.UpdateCost(uiScript.potholeCost, potholeCost);
+            potholeLvl += 1;
+            uiScript.UpdateUpgrades(uiScript.potholeCost, potholeCost, uiScript.potholeLvl, potholeLvl);
         }
 
-        if(upgrade == "toll" && invScript.currentMoney >= tollCost)
+        if (upgrade == "toll" && invScript.currentMoney >= tollCost)
         {
-            invScript.cps += 1;
+            invScript.cps += 0.1f;
             invScript.currentMoney -= tollCost;
-            tollCost = Mathf.RoundToInt(tollCost * 1.5f);
-            uiScript.UpdateCost(uiScript.tollCost, tollCost);
+            tollLvl += 1;
+
+            if (tollLvl < tollCosts.Length)
+            {
+                tollCost = tollCosts[tollLvl];
+            }
+            else
+            {
+                tollCost = Mathf.RoundToInt(tollCosts[tollCosts.Length - 1] * 1.3f);
+            }
+
+            uiScript.UpdateUpgrades(uiScript.tollCost, tollCost, uiScript.tollLvl, tollLvl);
         }
 
-        if(upgrade == "property" && invScript.currentMoney >= propertyCost)
+        if (upgrade == "property" && invScript.currentMoney >= propertyCost && canProperty)
         {
-            invScript.cps += 10;
+            invScript.cps += 0.3f;
             invScript.currentMoney -= propertyCost;
-            propertyCost = Mathf.RoundToInt(propertyCost * 1.5f);
-            uiScript.UpdateCost(uiScript.propertyCost, propertyCost);
+            propertyLvl += 1;
+
+            if (propertyLvl < propertyCosts.Length)
+            {
+                propertyCost = propertyCosts[propertyLvl];
+            }
+            else
+            {
+                tollCost = Mathf.RoundToInt(propertyCosts[propertyCosts.Length - 1] * 1.3f);
+            }
+
+            uiScript.UpdateUpgrades(uiScript.propertyCost, propertyCost, uiScript.propertyLvl, propertyLvl);
+        }
+
+        if (upgrade == "grog" && invScript.currentMoney >= grogCost && canGrog)
+        {
+            invScript.cps += 1f;
+            invScript.currentMoney -= grogCost;
+            grogLvl += 1;
+
+            if (grogLvl < grogCosts.Length)
+            {
+                grogCost = grogCosts[grogLvl];
+            }
+            else
+            {
+                tollCost = Mathf.RoundToInt(grogCosts[grogCosts.Length - 1] * 1.3f);
+            }
+
+            uiScript.UpdateUpgrades(uiScript.grogCost, grogCost, uiScript.grogLvl, grogLvl);
+        }
+
+        if (upgrade == "corp" && invScript.currentMoney >= corpCost && canCorp)
+        {
+            invScript.cps += 3.1f;
+            invScript.currentMoney -= corpCost;
+            corpLvl += 1;
+
+            if (corpLvl < corpCosts.Length)
+            {
+                corpCost = corpCosts[corpLvl];
+            }
+            else
+            {
+                corpCost = Mathf.RoundToInt(corpCosts[corpCosts.Length - 1] * 1.3f);
+            }
+
+            uiScript.UpdateUpgrades(uiScript.corpCost, corpCost, uiScript.corpLvl, corpLvl);
+        }
+
+        if (upgrade == "war" && invScript.currentMoney >= warCost && canWar)
+        {
+            invScript.cps += 6f;
+            invScript.currentMoney -= warCost;
+            warLvl += 1;
+
+            if (warLvl < warCosts.Length)
+            {
+                warCost = warCosts[warLvl];
+            }
+            else
+            {
+                warCost = Mathf.RoundToInt(warCosts[warCosts.Length - 1] * 1.3f);
+            }
+
+            uiScript.UpdateUpgrades(uiScript.warCost, warCost, uiScript.warLvl, warLvl);
         }
     }
 }

@@ -8,14 +8,34 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI cpsText;
     private Inv inv;
-    public TextMeshProUGUI potholeCost;
-    public TextMeshProUGUI tollCost;
-    public TextMeshProUGUI propertyCost;
+    private UpgradeManager upgradeManager;
 
+    public TextMeshProUGUI potholeCost;
+    public TextMeshProUGUI potholeLvl;
+
+    public TextMeshProUGUI tollCost;
+    public TextMeshProUGUI tollLvl;
+
+    public TextMeshProUGUI propertyCost;
+    public TextMeshProUGUI propertyLvl;
+    public GameObject propertyCover;
+
+    public TextMeshProUGUI grogCost;
+    public TextMeshProUGUI grogLvl;
+    public GameObject grogCover;
+
+    public TextMeshProUGUI corpCost;
+    public TextMeshProUGUI corpLvl;
+    public GameObject corpCover;
+
+    public TextMeshProUGUI warCost;
+    public TextMeshProUGUI warLvl;
+    public GameObject warCover;
 
     private void Start()
     {
         inv = FindObjectOfType<Inv>();
+        upgradeManager = FindObjectOfType<UpgradeManager>();
         UpdateText();
         Application.targetFrameRate = 60;
     }
@@ -27,13 +47,34 @@ public class UIManager : MonoBehaviour
 
     public void UpdateText()
     {
-        moneyText.text = inv.currentMoney.ToString();
+        moneyText.text = "$" + Mathf.FloorToInt(inv.currentMoney).ToString();
     }
 
-    public void UpdateCost(TextMeshProUGUI text, int cost)
+    public void UpdateUpgrades(TextMeshProUGUI costText, int cost, TextMeshProUGUI levelText, int level)
     {
-        text.text = "$" + cost.ToString();
+        costText.text = "$" + cost.ToString();
+        levelText.text = "Level  " + level;
         UpdateText();
+        if(upgradeManager.tollLvl > 1)
+        {
+            propertyCover.SetActive(false);
+            upgradeManager.canProperty = true;
+        }
+        if (upgradeManager.propertyLvl > 1)
+        {
+            grogCover.SetActive(false);
+            upgradeManager.canGrog = true;
+        }
+        if (upgradeManager.grogLvl > 1)
+        {
+            corpCover.SetActive(false);
+            upgradeManager.canCorp = true;
+        }
+        if (upgradeManager.corpLvl > 1)
+        {
+            warCover.SetActive(false);
+            upgradeManager.canWar = true;
+        }
     }
 
 }
