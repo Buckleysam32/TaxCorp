@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI moneyText;
     public TextMeshProUGUI cpsText;
     private Inv inv;
-    private UpgradeManager upgradeManager;
+    public UpgradeManager upgradeManager;
 
     public TextMeshProUGUI potholeCost;
     public TextMeshProUGUI potholeLvl;
@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         inv = FindObjectOfType<Inv>();
-        upgradeManager = FindObjectOfType<UpgradeManager>();
         UpdateText();
         Application.targetFrameRate = 60;
     }

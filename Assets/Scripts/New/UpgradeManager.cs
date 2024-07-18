@@ -12,39 +12,44 @@ public class UpgradeManager : MonoBehaviour
 
     private int tollCost;
     public int tollLvl;
-    private int[] tollCosts = { 0, 3, 39, 50, 65, 85, 111, 144, 188, 244, 318 };
+    private int[] tollCosts = { 3, 39, 50, 65, 85, 111, 144, 188, 244, 318 };
 
     private int propertyCost;
     public int propertyLvl;
     public bool canProperty;
-    private int[] propertyCosts = { 0, 100, 130, 169, 219, 285, 371, 482, 627, 815, 1060 };
+    private int[] propertyCosts = { 100, 130, 169, 219, 285, 371, 482, 627, 815, 1060 };
 
     private int grogCost;
     public int grogLvl;
     public bool canGrog;
-    private int[] grogCosts = { 0, 1000, 1300, 1690, 2856, 3712, 4826, 6274, 8156, 10603, 13784 };
+    private int[] grogCosts = { 1000, 1300, 1690, 2856, 3712, 4826, 6274, 8156, 10603, 13784 };
 
     private int corpCost;
     public int corpLvl;
     public bool canCorp;
-    private int[] corpCosts = { 0, 10000, 13000};
+    private int[] corpCosts = { 10000, 13000};
 
     private int warCost;
     public int warLvl;
     public bool canWar;
-    private int[] warCosts = { 0, 50000, 65000};
+    private int[] warCosts = { 50000, 65000};
 
     private void Start()
     {
         invScript = FindObjectOfType<Inv>();
         uiScript = FindObjectOfType<UIManager>();
-        potholeLvl = 1;
+        potholeLvl = 0;
         potholeCost = 50;
-        tollLvl = 1;
-        propertyLvl = 1;
-        grogLvl = 1;
-        corpLvl = 1;
-        warLvl = 1;
+        tollLvl = 0;
+        tollCost = 3;
+        propertyLvl = 0;
+        propertyCost = 100;
+        grogLvl = 0;
+        grogCost = 1000;
+        corpLvl = 0;
+        corpCost = 10000;
+        warLvl = 0;
+        warCost = 50000;
         canProperty = false;
         canGrog = false;
         canCorp = false;
