@@ -11,31 +11,31 @@ public class Drone : MonoBehaviour
     [SerializeField]
     private GameObject droneMenu;
 
-    private Animator myAnim;
+    public Animator myAnim;
 
-    private int doubleChance = 1;
-    private int lowCashChance = 2;
-    private int medCashChance = 3;
-    private int highCashChance = 4;
-    
+    private ButtonManger myButtonManger;
+    private Inv inv; 
 
     private void Start()
     {
-        myAnim = GetComponent<Animator>();
         StartCoroutine(SpawnDrone());
+        myButtonManger = FindObjectOfType<ButtonManger>();
+        inv = FindObjectOfType<Inv>();
     }
 
     IEnumerator SpawnDrone()
     {
-        float spawnTime = Random.Range(10f, 20f);
+        float spawnTime = Random.Range(60f, 300f);
         Debug.Log(spawnTime);
         yield return new WaitForSeconds(spawnTime);
-        
+        myAnim.SetTrigger("Fly");
+        StartCoroutine(SpawnDrone());
     }
 
     public void OpenDrone()
     {
         droneMenu.SetActive(true);
+        myButtonManger.canTap = false;
         int prize = Random.Range(1, 5);
         if(prize == 1)  
         {
@@ -49,9 +49,11 @@ public class Drone : MonoBehaviour
         {
             Debug.Log("Won med cash");
         }
+
         if (prize == 4)
         {
             Debug.Log("won high cash");
         }
+        myAnim.SetTrigger("Idle");
     }
 }
