@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        cpsText.text = "+" + inv.cps + "cps";
+        cpsText.text = "+" + Mathf.Round(inv.cps * 10f) * 0.1f + "cps";
     }
 
     public void UpdateText()
