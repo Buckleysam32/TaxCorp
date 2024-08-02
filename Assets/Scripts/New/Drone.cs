@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class Drone : MonoBehaviour
 {
@@ -14,7 +15,11 @@ public class Drone : MonoBehaviour
     public Animator myAnim;
 
     private ButtonManger myButtonManger;
-    private Inv inv; 
+    private Inv inv;
+    private float winAmount;
+    public TextMeshProUGUI amountText;
+    public GameObject upgradeButton;
+    public bool debugMode = false;
 
     private void Start()
     {
@@ -25,34 +30,69 @@ public class Drone : MonoBehaviour
 
     IEnumerator SpawnDrone()
     {
-        float spawnTime = Random.Range(60f, 300f);
+        myAnim.SetTrigger("Idle");
+        float spawnTime;
+        if (debugMode)
+        {
+            spawnTime = 5f;
+        }
+        else
+        {
+            spawnTime = Random.Range(30f, 120f);
+        }
         Debug.Log(spawnTime);
         yield return new WaitForSeconds(spawnTime);
         myAnim.SetTrigger("Fly");
-        StartCoroutine(SpawnDrone());
     }
 
     public void OpenDrone()
     {
+        dronePrefab.SetActive(false);
+        myAnim.SetTrigger("Idle");
         droneMenu.SetActive(true);
+        upgradeButton.SetActive(false);
         myButtonManger.canTap = false;
-        int prize = Random.Range(1, 5);
-        if(prize == 1)  
+        dronePrefab.SetActive(true);
+        StartCoroutine(SpawnDrone());
+        int prize = Random.Range(1, 4);
+        if (prize == 1)  
         {
-            Debug.Log("Won double cash");
+            if(inv.currentMoney <= 10)
+            {
+                winAmount = 10f;
+            }
+            else
+            {
+                winAmount = inv.currentMoney * 0.10f;
+            }
+            amountText.text = "$" + Mathf.FloorToInt(winAmount).ToString();
+            inv.currentMoney += winAmount;
         }
         if (prize == 2)
         {
-            Debug.Log("Won low cash");
+            if (inv.currentMoney <= 10)
+            {
+                winAmount = 10f;
+            }
+            else
+            {
+                winAmount = inv.currentMoney * 0.20f;
+            }
+            amountText.text = "$" + Mathf.FloorToInt(winAmount).ToString(); inv.currentMoney += winAmount;
+            inv.currentMoney += winAmount;
         }
         if (prize == 3)
         {
-            Debug.Log("Won med cash");
-        }
-
-        if (prize == 4)
-        {
-            Debug.Log("won high cash");
+            if (inv.currentMoney <= 10)
+            {
+                winAmount = 10f;
+            }
+            else
+            {
+                winAmount = inv.currentMoney * 0.40f;
+            }
+            amountText.text = "$" + Mathf.FloorToInt(winAmount).ToString(); inv.currentMoney += winAmount;
+            inv.currentMoney += winAmount;
         }
         myAnim.SetTrigger("Idle");
     }
