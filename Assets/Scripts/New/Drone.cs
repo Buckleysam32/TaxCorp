@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using JetBrains.Annotations;
 
 public class Drone : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class Drone : MonoBehaviour
     public TextMeshProUGUI amountText;
     public GameObject upgradeButton;
     public bool debugMode = false;
+    private float ogCPS;
+    private int ogTap;
+
+    private bool isBoost;
+
+    public GameObject boostIcon;
 
     private void Start()
     {
@@ -54,7 +61,11 @@ public class Drone : MonoBehaviour
         myButtonManger.canTap = false;
         dronePrefab.SetActive(true);
         StartCoroutine(SpawnDrone());
-        int prize = Random.Range(1, 4);
+        int prize = Random.Range(1, 5);
+        if (debugMode)
+        {
+            prize = 4;
+        }
         if (prize == 1)  
         {
             if(inv.currentMoney <= 10)
@@ -94,6 +105,27 @@ public class Drone : MonoBehaviour
             amountText.text = "$" + Mathf.FloorToInt(winAmount).ToString(); inv.currentMoney += winAmount;
             inv.currentMoney += winAmount;
         }
+        if (prize == 4)
+        {
+            StartCoroutine(MoneyBoost());
+            amountText.text = "2x Boost!";
+        }
+
         myAnim.SetTrigger("Idle");
+
     }
+    
+    IEnumerator MoneyBoost()
+    {
+        ogCPS = inv.cps; // Store cps
+        ogTap = inv.tapAmount;
+        inv.tapAmount *= 2;
+        inv.cps *= 2;
+        boostIcon.SetActive(true);
+        yield return new WaitForSeconds(30f);
+        inv.tapAmount = ogTap;
+        boostIcon.SetActive(false);
+        inv.cps = ogCPS;
+    }
+
 }
