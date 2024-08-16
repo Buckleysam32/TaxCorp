@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     private Inv inv;
     public UpgradeManager upgradeManager;
 
+    public GameObject UpgradeMenu;
+
     public TextMeshProUGUI potholeCost;
     public TextMeshProUGUI potholeLvl;
 
@@ -41,12 +43,14 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        cpsText.text = "+" + Mathf.Round(inv.cps * 10f) * 0.1f + "cps";
+        float cpsRound = Mathf.Round(inv.cps * 10f) * 0.1f;
+        cpsText.text = "+" + NumberFormatter.FormatNumber(cpsRound) + "cps";
     }
 
     public void UpdateText()
     {
-        moneyText.text = "$" + Mathf.FloorToInt(inv.currentMoney).ToString();
+        int flooredMoney = Mathf.FloorToInt(inv.currentMoney);
+        moneyText.text = "$" + NumberFormatter.FormatNumber(flooredMoney);
     }
 
     public void UpdateUpgrades(TextMeshProUGUI costText, int cost, TextMeshProUGUI levelText, int level)
@@ -76,4 +80,27 @@ public class UIManager : MonoBehaviour
         }
     }
 
+}
+
+public class NumberFormatter : MonoBehaviour
+{
+    public static string FormatNumber(float number)
+    {
+        if (number >= 1000000)
+        {
+            return (number / 1000000f).ToString("0.#") + "M"; 
+        }
+        else if (number >= 100000)
+        {
+            return (number / 1000f).ToString("0") + "K"; 
+        }
+        else if (number >= 10000)
+        {
+            return (number / 1000f).ToString("0.#") + "K"; 
+        }
+        else
+        {
+            return number.ToString(); 
+        }
+    }
 }

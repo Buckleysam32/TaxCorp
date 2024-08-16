@@ -7,29 +7,29 @@ public class UpgradeManager : MonoBehaviour
     private Inv invScript;
     private UIManager uiScript;
 
-    private int potholeCost;
+    public int potholeCost;
     public int potholeLvl;
 
-    private int tollCost;
+    public int tollCost;
     public int tollLvl;
     private int[] tollCosts = { 3, 39, 50, 65, 85, 111, 144, 188, 244, 318 };
 
-    private int propertyCost;
+    public int propertyCost;
     public int propertyLvl;
     public bool canProperty;
     private int[] propertyCosts = { 100, 130, 169, 219, 285, 371, 482, 627, 815, 1060 };
 
-    private int grogCost;
+    public int grogCost;
     public int grogLvl;
     public bool canGrog;
     private int[] grogCosts = { 1000, 1300, 1690, 2856, 3712, 4826, 6274, 8156, 10603, 13784 };
 
-    private int corpCost;
+    public int corpCost;
     public int corpLvl;
     public bool canCorp;
     private int[] corpCosts = { 10000, 13000};
 
-    private int warCost;
+    public int warCost;
     public int warLvl;
     public bool canWar;
     private int[] warCosts = { 50000, 65000};
@@ -65,6 +65,7 @@ public class UpgradeManager : MonoBehaviour
             potholeCost = Mathf.RoundToInt(potholeCost * 1.5f);
             potholeLvl += 1;
             uiScript.UpdateUpgrades(uiScript.potholeCost, potholeCost, uiScript.potholeLvl, potholeLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
 
         if (upgrade == "toll" && invScript.currentMoney >= tollCost)
@@ -83,6 +84,7 @@ public class UpgradeManager : MonoBehaviour
             }
 
             uiScript.UpdateUpgrades(uiScript.tollCost, tollCost, uiScript.tollLvl, tollLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
 
         if (upgrade == "property" && invScript.currentMoney >= propertyCost && canProperty)
@@ -101,6 +103,7 @@ public class UpgradeManager : MonoBehaviour
             }
 
             uiScript.UpdateUpgrades(uiScript.propertyCost, propertyCost, uiScript.propertyLvl, propertyLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
 
         if (upgrade == "grog" && invScript.currentMoney >= grogCost && canGrog)
@@ -119,6 +122,7 @@ public class UpgradeManager : MonoBehaviour
             }
 
             uiScript.UpdateUpgrades(uiScript.grogCost, grogCost, uiScript.grogLvl, grogLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
 
         if (upgrade == "corp" && invScript.currentMoney >= corpCost && canCorp)
@@ -137,6 +141,7 @@ public class UpgradeManager : MonoBehaviour
             }
 
             uiScript.UpdateUpgrades(uiScript.corpCost, corpCost, uiScript.corpLvl, corpLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
 
         if (upgrade == "war" && invScript.currentMoney >= warCost && canWar)
@@ -155,6 +160,7 @@ public class UpgradeManager : MonoBehaviour
             }
 
             uiScript.UpdateUpgrades(uiScript.warCost, warCost, uiScript.warLvl, warLvl);
+            FindObjectOfType<GameManager>().SaveGame();
         }
     }
 }
