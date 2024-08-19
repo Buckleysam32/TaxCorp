@@ -54,6 +54,7 @@ public class UpgradeManager : MonoBehaviour
         canGrog = false;
         canCorp = false;
         canWar = false;
+        FindObjectOfType<GameManager>().LoadGame();
     }
 
     public void BuyUpgrade(string upgrade)

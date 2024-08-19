@@ -12,8 +12,8 @@ public class Inv : MonoBehaviour
 
     private void Start()
     {
-        UIScript = FindObjectOfType<UIManager>();
         tapAmount = 1;
+        UIScript = FindObjectOfType<UIManager>();
         StartCoroutine(AddCpsOverTime());
     }
 
